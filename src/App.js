@@ -2,7 +2,7 @@
 import './App.css';
 
 //React
-import { useCallBack, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 //data
 import { wordsList } from './data/words';
@@ -35,7 +35,7 @@ function App() {
   const [guesses, setGuesses] = useState(guessesQty);
   const [score, setScore] = useState(0);
 
-  const pickWordAndCategory = useCallBack(() => {
+  const pickWordAndCategory = useCallback(() => {
     const categories = Object.keys(words);
 
     // Pegando uma categoria aleatória.
@@ -55,7 +55,7 @@ function App() {
   //Função para startar o jogo
   //useCallBack serve para evitar que a função fique se repetindo dentro do useEffect
   //o próprio React reclama que a função está dentro do useEffect
-  const startGame = useCallBack(() => {
+  const startGame = useCallback(() => {
 
     // Escolhendo a palavra e a categoria
     const { word, category } = pickWordAndCategory();
