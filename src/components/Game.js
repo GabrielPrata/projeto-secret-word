@@ -40,7 +40,7 @@ const Game = ({
         Dica: <span>{pickedCategory}</span>
       </h3>
 
-      <p>Você ainda tem {guesses == 1 ? (guesses + " tentativa") : (guesses + " tentativas")}</p>
+      <p>Você ainda tem {guesses === 1 ? (guesses + " tentativa") : (guesses + " tentativas")}</p>
 
       <div className="wordContainer">
         {/* Aqui, mapeio letters que é onde as letras da palavra estão armazenadas

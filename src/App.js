@@ -5,7 +5,7 @@ import './App.css';
 import { useCallBack, useEffect, useState } from 'react';
 
 //data
-import { wordlist, wordsList } from './data/words';
+import { wordsList } from './data/words';
 
 // Componentes
 import StartScreen from './components/StartScreen';
@@ -35,7 +35,7 @@ function App() {
   const [guesses, setGuesses] = useState(guessesQty);
   const [score, setScore] = useState(0);
 
-  const pickWordAndCategory = () => {
+  const pickWordAndCategory = useCallBack(() => {
     const categories = Object.keys(words);
 
     // Pegando uma categoria aleatória.
@@ -49,10 +49,13 @@ function App() {
 
     return { word, category };
 
-  }
+    //Coloco para ser observado o que é fundamental para o bom funcionamento desta função
+  }, [words]);
 
   //Função para startar o jogo
-  const startGame = () => {
+  //useCallBack serve para evitar que a função fique se repetindo dentro do useEffect
+  //o próprio React reclama que a função está dentro do useEffect
+  const startGame = useCallBack(() => {
 
     // Escolhendo a palavra e a categoria
     const { word, category } = pickWordAndCategory();
@@ -73,7 +76,8 @@ function App() {
 
     setGameStage(stages[1].name);
 
-  };
+    //Coloco para ser observado o que é fundamental para o bom funcionamento desta função
+  }, [pickWordAndCategory]);
 
   // Processando a entrada das letras
   const verifyLetter = (letra) => {
@@ -126,10 +130,10 @@ function App() {
     // Pois se o usuário digitar um O, dos dois serão preenchidos
     // Para isso, pego o array de letters e tiro as letras repetidas
     // o Set() só deixa itens únicos em um array
-    const uniqueLetters = [... new Set(letters)];
+    const uniqueLetters = [...new Set(letters)];
 
     // Condição de vitória
-    if (guessedLetters.length == uniqueLetters.length) {
+    if (guessedLetters.length === uniqueLetters.length) {
       // Adiconando a pontuação
       setScore((actualScore) => actualScore += 100);
 
@@ -144,7 +148,7 @@ function App() {
       startGame();
     }
 
-  }, [guessedLetters])
+  }, [guessedLetters, letters, startGame])
 
   // Função para reiniciar o jogo caso o usuário perca
   const retry = () => {
